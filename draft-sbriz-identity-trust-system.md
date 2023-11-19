@@ -1,30 +1,10 @@
 ---
-###
-# Internet-Draft Markdown Template
-#
-# Rename this file from draft-todo-yourname-protocol.md to get started.
-# Draft name format is "draft-<yourname>-<workgroup>-<name>.md".
-#
-# For initial setup, you only need to edit the first block of fields.
-# Only "title" needs to be changed; delete "abbrev" if your title is short.
-# Any other content can be edited, but be careful not to introduce errors.
-# Some fields will be set automatically during setup if they are unchanged.
-#
-# Don't include "-00" or "-latest" in the filename.
-# Labels in the form draft-<yourname>-<workgroup>-<name>-latest are used by
-# the tools to refer to the current version; see "docname" for example.
-#
-# This template uses kramdown-rfc: https://github.com/cabo/kramdown-rfc
-# You can replace the entire file if you prefer a different format.
-# Change the file extension to match the format (.xml for XML, etc...)
-#
-###
 title: "Identity Trust System"
 category: std
 
-docname: draft-sbriz-identity-trust-system-01
+docname: draft-sbriz-identity-trust-system-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
-number: 01
+number:
 date:
 consensus: true
 v: 3
@@ -50,10 +30,10 @@ author:
 
 normative:  
 
-  RFC6749:
-  RFC5322:
-  RFC5321:
-  RFC5234:
+  RFC6749:  
+  RFC5322:  
+  RFC5321:  
+  RFC5234:  
 
 informative:  
 
@@ -63,13 +43,13 @@ informative:
       QTR-RLB-IMEI - Reliability of International Mobile Station Equipment Identity (IMEI), Technical Report
     author:
       org: International Telecommunications Union
-    date: 2020-07
+    date: 2020-07  
   ITU2:
     target: "https://www.itu.int/rec/T-REC-E.118"
     title: "E.118: The International Telecommunication Charge Card"
     author:
       org: International Telecommunications Union
-    date: 2006-05
+    date: 2006-05  
   LS1:
     target: "https://www.isaca.org/resources/isaca-journal/issues/2022/volume-2/a-symmetrical-framework-for-the-exchange-of-identity-credentials-based-on-the-trust-paradigm-part-1"
     title: >
@@ -78,7 +58,7 @@ informative:
     author:
       ins: L. Sbriz
       name: Luigi Sbriz
-    date: 2022-04
+    date: 2022-04  
   LS2:
     target: "https://www.isaca.org/resources/isaca-journal/issues/2022/volume-2/a-symmetrical-framework-for-the-exchange-of-identity-credentials-based-on-the-trust-paradigm-part-2"
     title: >
@@ -87,7 +67,7 @@ informative:
     author:
       ins: L. Sbriz
       name: Luigi Sbriz
-    date: 2022-04
+    date: 2022-04  
   LS3:
     target: "https://www.isaca.org/resources/isaca-journal/issues/2023/volume-1/how-to-digitally-verify-human-identity"
     title: >
@@ -95,7 +75,7 @@ informative:
     author:
       ins: L. Sbriz
       name: Luigi Sbriz
-    date: 2023-01
+    date: 2023-01  
   LS4:
     target: "https://www.isaca.org/resources/isaca-journal/issues/2023/volume-6/modeling-an-identity-trust-system"
     title: >
