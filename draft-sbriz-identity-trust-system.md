@@ -3,7 +3,7 @@ title: "Identity Trust System"
 category: std
 
 docname: draft-sbriz-identity-trust-system-latest
-submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
+submissiontype: IETF
 number:
 date:
 consensus: true
@@ -14,6 +14,7 @@ keyword:
  - identity
  - authentication
  - symmetric method
+
 venue:
   group: Web Authorization Protocol
   type: Working Group
@@ -26,7 +27,7 @@ author:
  -
     fullname: Luigi Sbriz
     organization: Cybersecurity & Privacy Senior Consultant
-    email: your.email@example.com
+    email: luigi@sbriz.eu
 
 normative:  
 
