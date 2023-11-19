@@ -50,12 +50,14 @@ author:
     email: your.email@example.com
 
 normative:
+
   RFC6749:
   RFC5322:
   RFC5321:
   RFC5234:
 
 informative:
+
   ITU1:
     target: "https://www.itu.int/dms_pub/itu-t/opb/tut/T-TUT-CCICT-2020-PDF-E.pdf"
     title: >
