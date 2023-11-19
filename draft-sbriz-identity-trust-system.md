@@ -20,7 +20,6 @@
 #
 ###
 title: "Identity Trust System"
-abbrev: "Identity Trust"
 category: std
 
 docname: draft-sbriz-identity-trust-system-01
@@ -49,14 +48,14 @@ author:
     organization: Cybersecurity & Privacy Senior Consultant
     email: your.email@example.com
 
-normative:
+normative:  
 
   RFC6749:
   RFC5322:
   RFC5321:
   RFC5234:
 
-informative:
+informative:  
 
   ITU1:
     target: "https://www.itu.int/dms_pub/itu-t/opb/tut/T-TUT-CCICT-2020-PDF-E.pdf"
