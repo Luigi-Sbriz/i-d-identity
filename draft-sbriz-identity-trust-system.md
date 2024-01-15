@@ -108,7 +108,7 @@ It is necessary to modify the authentication protocol to implement symmetric rec
 
 ## Use cases of both authentication schemes
 
-Figure 1 shows a use case describing the components of the classic identity recognition method with asymmetry in the authentication process [RFC6749]. A SVG image is available [here](https://github.com/Luigi-Sbriz/identity/images/1_Asymmetric-depiction.svg). The scenario depicted represents a resource owner who needs to retrieve a resource from the service provider. The identity provider MUST verify the identity of the resource owner before accessing the resource server.
+Figure 1 shows a use case describing the components of the classic identity recognition method with asymmetry in the authentication process [RFC6749]. A SVG image is available [here](https://github.com/Luigi-Sbriz/identity/images/1_Asymmetric-depiction.svg). The scenario depicted represents a resource owner who needs to retrieve a resource from the service provider. The identity provider MUST verify the identity of the resource owner before accessing the resource server. Review the links.
 
                       ┌───────────┐
                       │Identity   │
@@ -140,7 +140,7 @@ Figure 1 shows a use case describing the components of the classic identity reco
     
          Figure 1: Abstract Authorization Flow - Asymmetrical Case
 
-Figure 2 shows a use case describing the components necessary to enable the identity authentication process in a symmetrical way that can operate in different digital ecosystems. A SVG image is available [here](https://github.com/Luigi-Sbriz/identity/images/2_Symmetric-depiction.svg). The new scenario depicts two different ecosystems, one for the resource owner and the other for the service provider. This means there MUST be two different identity providers interacting with each other to ensure the authentication process.
+Figure 2 shows a use case describing the components necessary to enable the identity authentication process in a symmetrical way that can operate in different digital ecosystems. A SVG image is available [here](https://github.com/Luigi-Sbriz/identity/images/2_Symmetric-depiction.svg). The new scenario depicts two different ecosystems, one for the resource owner and the other for the service provider. This means there MUST be two different identity providers interacting with each other to ensure the authentication process. Review the links.
 
                       ┌───────────┐        ┌───────────┐
                       │Identity   │        │Identity   │
@@ -219,7 +219,7 @@ Considering two entities, a consumer and a resource provider, each must authenti
 
 Conceptually, in a client-server schema, the authentication process begins with the resource owner requesting access to the protected resource to the service provider. Both respond with their access tokens and request their IdP to validate the received token. The IdPs exchange tokens for validation and send the result to their entity. On success, access to the resource is allowed.
 
-Figure 3 shows the abstract depiction of the symmetric authentication sequence. A SVG image is available [here](https://github.com/Luigi-Sbriz/identity/images/3_Symmetric-sequence-diagram.svg).
+Figure 3 shows the abstract depiction of the symmetric authentication sequence. A SVG image is available [here](https://github.com/Luigi-Sbriz/identity/images/3_Symmetric-sequence-diagram.svg). Review the links.
 
     ┌───────────┐                                            ┌───────────┐
     │Relying    ├-(1)--Request Authentication--------------->│Authorizati│
@@ -316,7 +316,7 @@ Through the legal digital identity, each user can request the issuing of a new d
 
 ### Issuing of a New Digital Identity
 
-Figure 4 shows a use case describing the request of a new digital identity from an identity provider. A SVG image is available [here](https://github.com/Luigi-Sbriz/identity/images/4_New-identity-use-case.svg).
+Figure 4 shows a use case describing the request of a new digital identity from an identity provider. A SVG image is available [here](https://github.com/Luigi-Sbriz/identity/images/4_New-identity-use-case.svg). Review the links.
 
                       ┌───────────┐        ┌───────────┐
                       │Identity   │        │Identity   │
@@ -342,7 +342,7 @@ Figure 4 shows a use case describing the request of a new digital identity from 
     
          Figure 4: Abstract of New Digital Identity Request
 
-Figure 5 shows the abstract representation of the message exchange sequence to request a new digital identity. A SVG image is available [here](https://github.com/Luigi-Sbriz/identity/images/5_New-identity-sequence-diagram.svg).
+Figure 5 shows the abstract representation of the message exchange sequence to request a new digital identity. A SVG image is available [here](https://github.com/Luigi-Sbriz/identity/images/5_New-identity-sequence-diagram.svg). Review the links.
 
     ┌───────────┐      ┌───────────┐      ┌───────────┐      ┌───────────┐
     │Data       │      │User       │      │Authorizat.│      │Relying    │
