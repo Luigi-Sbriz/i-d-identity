@@ -90,17 +90,17 @@ This document defines an **identity trust system**, which is a symmetric digital
 
 # Introduction
 
-The current model of access to Internet protected resources requires that the identity of the user, i.e. the ***resource owner***, be authenticated by the resource manager, i.e. the ***service provider***. Authentication can be indirect, this means that there is a trusted third party for both, called ***identity provider***, which performs the authentication process. The mechanism is defined by [RFC6749].
+The typical model of access to Internet protected resources requires that the identity of the user, i.e. the ***resource owner***, be authenticated by the resource manager, i.e. the ***service provider***. The authentication process is not the primary task of the service provider and therefore can be entrusted to a third party shared between the user and the service provider, known as an ***identity provider***. A popular authentication mechanism is defined by [RFC6749].
 
-This mechanism is asymmetrical, only the resource owner needs to be recognized but not vice versa. Furthermore, the digital identity has value only within its own digital ecosystem (authentication domain or set of domains in a relationship of trust between each other). Changing digital ecosystem, a new user is needed for the resource owner.
+This mechanism is asymmetric, only the resource owner must be recognized but not vice versa. Furthermore, the digital identity has value only within the digital ecosystem of the identity provider, i.e. its authentication domain or in a set of domains in a relationship of trust between them. It follows that when the digital ecosystem changes, the resource owner needs a new user to be recognized in the new digital environment. Instead, with a symmetric authentication scheme, the new user is no longer necessary. Moreover, it is not even necessary to create a trust relationship between domains. Trust is assigned only to the entity that guarantees identity authentication process, i.e. the identity provider that guarantees the inviolability and truthfulness of the authentication messages exchanged.
 
-It is possible to improve this process by requiring equal dignity in recognition, i.e. each entity must be recognized by the other. Consequently, the identity recognition process will be symmetrical and presents a great advantage. It is no longer necessary to define a trust between domains or create new users to be able to operate in an ecosystem different from your own.
+The concept used to build symmetric authentication is the request for equal dignity in recognition, i.e. each entity must be recognized by the other. To achieve this equal relationship, an identity recognition process based on a mirrored sequence of messages exchanged is necessary. Consequently, basing this symmetric process on the trust assigned to the identity provider has a great advantage, it is no longer necessary to define a specific trust between domains or create new users to be able to operate in an ecosystem different from that of belonging.
 
-It is necessary to modify the authentication protocol to implement symmetric recognition of the digital identity. Furthermore, a network infrastructure dedicated to identity providers is required to guarantee confidentiality and reliability in the exchange of messages between them. Additionally, dividing IdPs into two categories improves security. One category will be made up of those who are only authorized to recognize digital identity, while the other category is that of identity providers with the legal authority to also manage real identity.
+To implement this solution it is necessary to modify the authentication protocol to support the symmetric exchange of identification messages, and also implement a similar message exchange mechanism between identity providers. For security reasons, an infrastructure dedicated to identity providers is required. Furthermore, dividing IdPs into two categories reduces the amount of personal data used in registrations. The first category will be made up of those who are only authorized to recognize digital identity. The second category consists of those with the legal authority to also manage the real identity. The second category will act as a guarantor of the authenticity of the identity used in registration on the providers of the first category.
 
 ## Use cases of both authentication schemes
 
-Figure 1 shows a use case describing the components of the classic identity recognition method with asymmetry in the authentication process [RFC6749]. A SVG image is available [here](https://github.com/Luigi-Sbriz/identity/images/1_Asymmetric-depiction.svg). The scenario depicted represents a resource owner who needs to retrieve a resource from the service provider. The identity provider MUST verify the identity of the resource owner before accessing the resource server. Review the links.
+Figure 1 depicts the use case of the classic identity recognition method with asymmetry in the process of exchanging authentication messages [RFC6749]. A SVG image is available [here](https://raw.githubusercontent.com/Luigi-Sbriz/identity/main/images/1_Asymmetric-depiction.svg). The scenario depicted represents a resource owner who needs to retrieve a resource from the service provider. The identity provider MUST verify the identity of the resource owner before accessing the resource server. The relying party who manages the resource does not provide any information about its identity, it provides the resource only to authorized requests.
 
                       ┌───────────┐
                       │Identity   │
@@ -111,17 +111,15 @@ Figure 1 shows a use case describing the components of the classic identity reco
                    .........│..............................
                    :  ┌─────┴─────┐                       :
                    :  │Authorizati│                       :
-                   :  │           │                       :
-                   :  │on Server  │                       :
-                   :  └─────┬─────┘                       :
-                   :        │                             :
-                   :        │                             :
-    ┌───────────┐  :  ┌─────┴─────┐        ┌───────────┐  :  ┌───────────┐
+                   :  │           ├──────────────┐        :
+                   :  │on Server  │              │        :
+                   :  └─────┬─────┘              │        :
+                   :        │                    │        :
+    ┌───────────┐  :  ┌─────┴─────┐        ┌─────┴─────┐  :  ┌───────────┐
     │Resource   │  :  │User       │        │Relying    │  :  │Service    │
     │           ├─────┤           ├────────┤           ├─────┤           │
     │Owner      │  :  │Agent      │        │Party      │  :  │Provider   │
     └───────────┘  :  └───────────┘        └─────┬─────┘  :  └───────────┘
-                   :                             │        :
                    :                             │        :
                    :                       ┌─────┴─────┐  :
                    :                       │Resource   │  :
@@ -130,9 +128,9 @@ Figure 1 shows a use case describing the components of the classic identity reco
                    :                       └───────────┘  :
                    :......................................:
     
-         Figure 1: Abstract Authorization Flow - Asymmetrical Case
+    Figure 1: Use case of the authorization flow - Asymmetrical case
 
-Figure 2 shows a use case describing the components necessary to enable the identity authentication process in a symmetrical way that can operate in different digital ecosystems. A SVG image is available [here](https://github.com/Luigi-Sbriz/identity/images/2_Symmetric-depiction.svg). The new scenario depicts two different ecosystems, one for the resource owner and the other for the service provider. This means there MUST be two different identity providers interacting with each other to ensure the authentication process. Review the links.
+Figure 2 depicts the use case with the components needed to enable the identity authentication process in a symmetric manner capable of operating in different digital ecosystems. A SVG image is available [here](https://raw.githubusercontent.com/Luigi-Sbriz/identity/main/images/2_Symmetric-depiction.svg). The new scenario depicts two different ecosystems, one for the resource owner (client accessing the resource) and the other for the service provider (server managing the resource). This means that any entity involved in the authentication process will have its own identity provider, and they will interact with each other to ensure the completion of the symmetric authentication process.
 
                       ┌───────────┐        ┌───────────┐
                       │Identity   │        │Identity   │
@@ -148,13 +146,11 @@ Figure 2 shows a use case describing the components necessary to enable the iden
                    :  │on Server C│  :  :  │on Server S│  :
                    :  └─────┬─────┘  :  :  └─────┬─────┘  :
                    :        │        :  :        │        :
-                   :        │        :  :        │        :
     ┌───────────┐  :  ┌─────┴─────┐  :  :  ┌─────┴─────┐  :  ┌───────────┐
     │Resource   │  :  │User       │  :  :  │Relying    │  :  │Service    │
     │           ├─────┤           ├────────┤           ├─────┤           │
     │Owner      │  :  │Agent      │  :  :  │Party      │  :  │Provider   │
     └───────────┘  :  └───────────┘  :  :  └─────┬─────┘  :  └───────────┘
-                   :                 :  :        │        :
                    :                 :  :        │        :
                    :                 :  :  ┌─────┴─────┐  :
                    :                 :  :  │Resource   │  :
@@ -163,9 +159,9 @@ Figure 2 shows a use case describing the components necessary to enable the iden
                    :                 :  :  └───────────┘  :
                    :.................:  :.................:
     
-         Figure 2: Abstract Authorization Flow - Symmetrical Case
+    Figure 2: Use case of the authorization flow - Symmetrical case
 
-The two representations are very similar to each other but it is noted that the symmetric protocol introduces direct communication between the identity providers' authentication servers to allow the circular transit of authentication messages. Therefore, no trust is needed between domains. The idea was first exposed in some articles published on ISACA Journal (see [LS1], [LS2], [LS3], [LS4]) with some specific use cases and examples.
+The two representations are very similar to each other but note that the symmetric protocol requires direct communication between the identity providers' authentication servers to allow the circular transit of authentication messages. Therefore, no trust between domains or new users is necessary. This idea was first exposed in some articles published on ISACA Journal (see [LS1], [LS2], [LS3], [LS4]) with some specific use cases and examples of potential implementations.
 
 # Conventions and Definitions
 
@@ -174,33 +170,33 @@ The two representations are very similar to each other but it is noted that the 
 Some terms are used with a precise meaning.
 
 - "***resource owner***": 
-An entity capable of granting access to a protected resource. When the resource owner is a person, it is referred to as an end-user or an individual. This is sometimes abbreviated as "***RO***". 
+An entity capable of granting access to a protected resource. When the resource owner is a person, it is also referred to as "***end user***", "***consumer***" or "***individual***". This is sometimes abbreviated as "***RO***".
 - "***service provider***": 
-An entity capable of managing access to a protected resource. It is generally a legal person. This is sometimes abbreviated as "***SP***". 
+An entity capable of managing access to a protected resource. It is generally a legal person. This is sometimes abbreviated as "***SP***".
 - "***identity provider***": 
-An entity capable of managing and recognizing the identity of registered entities. The set of all entities registered by the identity provider is also known as the IdP's digital ecosystem. This is sometimes abbreviated as "***IdP***". 
+An entity capable of managing and recognizing the identity of registered entities. The set of all entities registered by the identity provider is also known as the IdP's digital ecosystem. This is sometimes abbreviated as "***IdP***".
 - "***resource server***": 
-The server hosting the protected resources, capable of accepting and responding to protected resource requests using access tokens. The resource server is often accessible via an API. This is sometimes abbreviated as "***RS***". 
-- "***client***" or "***user agent***": 
-An application making protected resource requests on behalf of the resource owner and with its authorization. The term "client" does not imply any particular implementation characteristics (e.g., whether the application executes on a server, a desktop, or other devices). 
+The server hosting the protected resources, capable of accepting and responding to protected resource requests using access tokens. The resource server is often accessible via an API. This is sometimes abbreviated as "***RS***".
+- "***client***", for software is also referred to as "***user agent***": 
+An application making protected resource requests on behalf of the resource owner and with its authorization. The term "client" does not imply any particular implementation characteristics (e.g., whether the application executes on a server, a desktop, or other devices).
 - "***relying party***": 
-An application making protected resource authorization on behalf of the service provider and also managing its identity. The "relying party" acts as the "client" but on service provider side. This is sometimes abbreviated as "***RP***". 
+An application making protected resource authorization on behalf of the service provider and also managing its identity. The "relying party" acts as the "client" but on service provider side. This is sometimes abbreviated as "***RP***".
 - "***authorization server***": 
-The server issuing access tokens to the client after successfully authenticating the resource owner and obtaining authorization. This is sometimes abbreviated as "***AS***". 
+The server issuing access tokens to the client after successfully authenticating the resource owner and obtaining authorization. This is sometimes abbreviated as "***AS***".
 - "***access token***": 
-The concept is the same of the [RFC6749], a tiny piece of code that contains the necessary authentication data, issued by the authorization server. 
+The concept is the same of the [RFC6749], a tiny piece of code that contains the necessary authentication data, issued by the authorization server.
 - "***identity token***" or "***ID token***": 
 The structure is similar to access token but it is used as proof that the user has been authenticated. The ID token may have additional information about the user and, it is signed by the issuer with its private key. To verify the token, the issuer's public key is used.
 - "***digital ecosystem***": 
 Internet environment composed of all entities based on the same identity provider.
 
-The detail of the information exchanged in the interactions between the authorization server and the requesting client, or between relying party and resource server, or the composition of tokens, is beyond the scope of this specification.
+The detail of the information exchanged or protocols in the interactions between the authorization server and the requesting client, or between relying party and resource server, or the composition of tokens, is beyond the scope of this specification.
 
 # Symmetric authentication protocol
 
-The symmetric authentication flow is conceptually not too dissimilar from the classic one on a single ecosystem [RFC5234], except that the authentication is dual because the two flows reflect the same operations symmetrically. Both the **client** (*resource owner*) and the **server** (*service provider*) MUST authenticate their identity through their IdP. The details of each basic operation are the same as the corresponding individual ecosystem specification [RFC6749] and maintain alignment with it over time.
+The symmetric authentication flow is conceptually not too dissimilar from the classic one referring to the single ecosystem [RFC5234], except that the authentication is dual because the two flows reflect the same operations symmetrically. Both the **client** (*resource owner*) and the **server** (*service provider*) MUST authenticate their identity through their IdP. The details of each basic operation in the symmetric process are the same as the corresponding single ecosystem specification [RFC6749] and MUST maintain alignment with it over time.
 
-Considering two entities, a consumer and a resource provider, each must authenticate to the other's environment. The sequence will be:
+The authentication sequence between a consumer and a resource provider operating in different environments will be:
 
 ***1.*** Entities exchange the access tokens received from their authentication server with each other.  
 ***2.*** Entities send the received token to their authentication server.  
@@ -211,7 +207,7 @@ Considering two entities, a consumer and a resource provider, each must authenti
 
 Conceptually, in a client-server schema, the authentication process begins with the resource owner requesting access to the protected resource to the service provider. Both respond with their access tokens and request their IdP to validate the received token. The IdPs exchange tokens for validation and send the result to their entity. On success, access to the resource is allowed.
 
-Figure 3 shows the abstract depiction of the symmetric authentication sequence. A SVG image is available [here](https://github.com/Luigi-Sbriz/identity/images/3_Symmetric-sequence-diagram.svg). Review the links.
+Figure 3 shows the abstract depiction of the symmetric authentication sequence. A SVG image is available [here](https://raw.githubusercontent.com/Luigi-Sbriz/identity/main/images/3_Symmetric-sequence-diagram.svg).
 
     ┌───────────┐                                            ┌───────────┐
     │Relying    ├-(1)--Request Authentication--------------->│Authorizati│
@@ -282,25 +278,61 @@ Figure 3 shows the abstract depiction of the symmetric authentication sequence. 
 
 The verification of the authenticity of the tokens is carried out by the IdPs who exchange messages on a dedicated network to reduce the risk of intrusion. Security is strengthened by the presence of two interfaces for the exchange of tokens, one is for the party in trust and the other is for the opposing party. If one is compromised, the other interrupts the flow avoiding authorization. The trust placed in the mutual validation of messages avoids having to merge authentication domains, leaving great flexibility to the system as a whole.
 
-Identity recognition information resides only with the trusted identity provider. This reduces the need to store too much personal information in Internet registrations. Furthermore, to easily identify which IdP holds the entity's authentication credentials, it can be easily extracted from the username structure if this is defined following the same technique used to compose an email address [RFC5322], that means an username, an @ sign, and a domain name.
+Identity recognition information resides only with a trusted identity provider. This reduces the need to store too much personal information in Internet registrations. Furthermore, to easily identify which IdP holds the entity's authentication credentials, it can be easily extracted from the username structure if this is defined following the same technique used to compose an email address [RFC5322], that means an username, an @ sign, and a domain name.
 
-# Identity Provider - Trustee Concepts
+# Identity Provider - Trustee Concept
 
-An IdP is a service provider that verifies the authenticity of a digital identity so that it is truly what it claims to be. The service provided is the guarantee of recognition of the identity of natural or legal persons in digital communication. For this role as an identity guarantor it can also be called an **ID trustee**. When processing personal data, the laws of the country to which the data subject belongs must be considered. It could also provide additional services (e-mail, voice mail, anonymous account,...) but always in full compliance with current legislation and only if they do not present a risk for the data subject.
+The symmetric authentication protocol bases its functioning on the existence of trusted entities, called ***identity providers (IdPs)***, in a network among themselves, exchanging authentication messages to guarantee the digital identity. Each IdP acts as a point of reference for the identity authentication service in its digital ecosystem, and must be able to communicate with every other IdP to recognize identities belonging to other ecosystems, securely from intrusions or tampering. The effectiveness of the entire authentication system depends on the trust placed in these identity providers but it must be deserved. This requires a robust organisation, subject to systematic oversight by independent certification body, to ensure transparent management by IdPs.
+
+## Importance of this role
+
+The identity provider is the guarantor of the authenticity of the relationship between digital credentials and the identity of natural or legal persons in digital communication. For this role it can also be called an **ID trustee** and the greatest criticality it must face is the inviolability of the messages exchanged. Furthermore, when processing personal data, the laws of the country to which the data subject belongs must be considered. It may also provide additional services (e.g. anonymous email, answering machine, anonymous accounts,...), but always in full compliance with the applicable law and only if they do not present risk for the data subject. Anonymization services are intended exclusively for the intended recipient but not for the authority exercising the applicable law (e.g. for a whistleblowing).
+
+An IdP MUST be a legal person subject to both the laws of the country to which it belongs and to international certification bodies, to guarantee compliance with this standard, the security of the information processed, the expected level of quality of service and the lawful processing of data.
+
+## Infrastructure
 
 The infrastructure underlying symmetric communication is a dedicated network to the exchange of authentication messages between IdPs. Ideally, each IdP always has two connectors, one to communicate with its trusted entity and the other to exchange messages with another IdP. With its own entity the mechanism is exactly the one defined by [RFC6749]. With other IdPs, a reserved channel is required for the exchange of tokens, which provides guarantees on the integrity of the messages and their origin. This channel SHOULD have low latency because it represents an additional step compared to the single ecosystem authentication scheme. The intended mechanism for sharing messages is that of a mail server [RFC5321].
 
 The dedicated network for the identity providers is not technically necessary for the authentication protocol but is essential for security, to reduce the risk of fraud or identity theft and, to ensure trust in lawful behavior. There MUST also be an international control body for the IdPs and the IdP network, an authority with the task of governing the overall system, i.e. defining technical standards, or carrying out audits to ensure compliance with the rules, or acting to exclude nodes in case of violation of the rules.
 
-An IdP MUST be a legal person subject to both the laws of the country where it is established and international certifications to protect data treatment and service provision in terms of security and quality.
+# Identity Provider - Custodian Concept
 
-# Identity Provider - Custodian Concepts
+The relationship between digital and physical identity should be managed only by a particular identity provider, called ***identity custodian (IdC)***, who has the legal authority to manage the personal data of the natural person. Only in this way it will be the perfect candidate to guarantee the identity provider the validity of the request for the release of a new digital identity, without having to disclose the physical identity to the IdP. Guaranteeing the digital identity of a user corresponding to a legal entity will not be the task of the identity custodian but of an authority or a process compliant with the law of the country to which the legal entity belongs. The identity token contains the indication between users of a natural person or a legal entity. The identity token makes it possible to distinguish the user of a natural or legal person and to know who has guaranteed the physical identity. An identity custodian can also act as an identity trustee, keeping roles distinct in communication protocols.
 
-The identity provider must carry out a recognition and registration of the user's personal data before being able to guarantee its identity. The collection of data from legal entities, as they are public, is not particularly critical, while for the natural person the protection provided by the law in force for the holder of the digital identity must be enforced. Consequently, it is useful to divide the set of IdPs into two categories, in the first the set of IdPs (also called trustees) that only manage the operation of digital identities and in the second those that guarantee to the trustees that the identity of the user is real. This last category of IdPs, called custodians (IdCs), should operate under the responsibility of the legal authority that manages the real identity of the individual (i.e. who issues the identity card). IdCs are the only guarantors of the link between physical and digital identity, the only ones to issue a digital identity with legal value. IdCs do not provide guarantees on identities associated with legal entities, which are managed directly by IdPs.
+## General schema
 
-Through the legal digital identity, each user can request the issuing of a new digital identity to the trusted IdP. The latter will request the IdC to confirm the authenticity of the identification data received from the user, that is, the user could send an ID token with the contact information of its IdC. The request will be handled entirely online and will not require any additional data from the data subject other than the identification information that it decides to provide. The new identity will be useful to satisfy the typical needs of Internet transactions by providing precise guarantees.
+The identity custodian certifies that it is a real identity that requires the digital identity but can also provide personal data to identity trustee with the consent of the data subject. The identity trustee provides the authentication service for its digital ecosystem. A use case describing the relationship between identity custodian, identity trustee, and digital identity is provided in figure 4. A SVG image is available [here](https://raw.githubusercontent.com/Luigi-Sbriz/identity/main/images/4_Identity-custodian-concept.svg).
 
-- The ***identity custodian*** is the guarantor of the existence of the natural person and has the ability to uniquely identify them but only following a formal request from the relevant authority.  
+    ............................              ............................
+    : Real ecosystem X         :              :         Real ecosystem Y :
+    :              ...................  ...................              :
+    :              :Digital          :  :          Digital:              :
+    :              :ecosystem A      :  :      ecosystem B:              :
+    :              :  ┌───────────┐  :  :  ┌───────────┐  :              :
+    :              :  │  Digital  │  :  :  │  Digital  │  :              :
+    :      ┌──────────┤           ├────────┤           ├──────────┐      :
+    :      │       :  │Identity A │  :  :  │Identity B │  :       │      :
+    :      │       :  └─────┬─────┘  :  :  └─────┬─────┘  :       │      :
+    :      │       :        │        :  :        │        :       │      :
+    :┌─────┴─────┐ :  ┌─────┴─────┐  :  :  ┌─────┴─────┐  : ┌─────┴─────┐:
+    :│ Identity  │ :  │ Identity  │  :  :  │ Identity  │  : │ Identity  │:
+    :│           ╞════╡           ╞════════╡           ╞════╡           │:
+    :│Custodian X│ :  │Provider A │  :  :  │Provider B │  : │Custodian Y│:
+    :└───────────┘ :  └───────────┘  :  :  └───────────┘  : └───────────┘:
+    : Real         :                 :  :                 :         Real :
+    : identity A   :.................:  :.................:   identity B :
+    :                          :              :                          :
+    :..........................:              :..........................:
+    
+    Figure 4: The Identity Custodian Use Case
+
+Generally, identity provider must carry out the recognition and registration of the user's personal data before being able to guarantee its identity. The collection of the data of the natural person must be carried out in accordance with the protection provided for by the regulations in force. To ensure that the processing of personal data is restricted and controlled, it is useful to divide the set of IdPs into two categories. In the first, there will be IdPs (also called trustees) that only manage digital identity operations, and in the second, IdCs (identity custodians) that guarantee trustees that the applicant's identity is real. The IdC's category should operate under the responsibility of the legal authority that manages the real identity of the individual (i.e. who issues the identity card). 
+
+Through the identity custodian, each individual can request the issuing of a new digital identity to their trusted IdP. It will be the trusted IdP who will ask for confirmation of the applicant's authenticity directly from the IdC. The applicant must send an ID token with their IdC contact information to initiate the request. The request will be managed entirely online and will not require any personal data from the data subject but, subject to consent, everything will be sent by the IdC. The new identity will be useful to meet the typical needs of transactions on the Internet, with the right confidentiality for the holder and an added value for the authority, being able to identify the real person. The digital legal identity to sign contracts should be managed directly by IdC.
+
+In short the roles involved in the trust-based authentication system.
+- The ***identity custodian*** is the guarantor of the existence of the natural person and has the ability to uniquely identify it but only following a formal request from the legitimate authority.  
 - The ***identity provider*** receives the identification data that the data subject has decided to provide and will match these to the digital identity.  
 - The ***service provider*** will have the guarantee that the user is linked to a real person for security, contractual or legal reasons.  
 - The ***data subject*** can provide personal information according to their need, also maintaining anonymity.  
@@ -308,22 +340,21 @@ Through the legal digital identity, each user can request the issuing of a new d
 
 ### Issuing of a New Digital Identity
 
-Figure 4 shows a use case describing the request of a new digital identity from an identity provider. A SVG image is available [here](https://github.com/Luigi-Sbriz/identity/images/4_New-identity-use-case.svg). Review the links.
+The request for a new digital identity is activated by the natural person towards the chosen trustee. The trustee will request confirmation from the identity custodian if the request lawfully came from a real person. In case of confirmation, it will record the personal data that the data subject has authorized IdC to transfer. A use case describing the request of a new digital identity is provided in figure 5. A SVG image is available [here](https://raw.githubusercontent.com/Luigi-Sbriz/identity/main/images/5_New-identity-use-case.svg).
 
                       ┌───────────┐        ┌───────────┐
                       │Identity   │        │Identity   │
                       │           │        │           │
                       │Custodian  │        │Provider   │
                       └─────┬─────┘        └─────┬─────┘
-                    Digital │ecosystem   Digital │ecosystem
-                            │IdC                 │IdP
+                      IdC   │              IdP   │
+                   ecosystem│           ecosystem│
                    .........│.........  .........│.........
                    :  ┌─────┴─────┐  :  :  ┌─────┴─────┐  :
                    :  │Authorizat.│  :  :  │Authorizat.│  :
                    :  │           ╞════════╡           │  :
                    :  │Server IdC │  :  :  │Server IdP │  :
                    :  └─────┬─────┘  :  :  └─────┬─────┘  :
-                   :        │        :  :        │        :
                    :        │        :  :        │        :
     ┌───────────┐  :  ┌─────┴─────┐  :  :  ┌─────┴─────┐  :
     │Data       │  :  │User       │  :  :  │Relying    │  :
@@ -332,9 +363,9 @@ Figure 4 shows a use case describing the request of a new digital identity from 
     └───────────┘  :  └───────────┘  :  :  └───────────┘  :
                    :.................:  :.................:
     
-         Figure 4: Abstract of New Digital Identity Request
+    Figure 5: Abstract of New Digital Identity Request
 
-Figure 5 shows the abstract representation of the message exchange sequence to request a new digital identity. A SVG image is available [here](https://github.com/Luigi-Sbriz/identity/images/5_New-identity-sequence-diagram.svg). Review the links.
+Figure 6 shows the abstract representation of the message exchange sequence to request a new digital identity. A SVG image is available [here](https://raw.githubusercontent.com/Luigi-Sbriz/identity/main/images/6_New-identity-sequence-diagram.svg).
 
     ┌───────────┐      ┌───────────┐      ┌───────────┐      ┌───────────┐
     │Data       │      │User       │      │Authorizat.│      │Relying    │
@@ -381,7 +412,7 @@ Figure 5 shows the abstract representation of the message exchange sequence to r
           |                            |                           |
           └<-(15)------Return ID Token-┘<-(14)-Return Client Token-┘
     
-    Figure 5: New Digital Identity Request - Sequence diagram
+    Figure 6: New Digital Identity Request - Sequence diagram
 
 (1) - (3)	The ***data subject*** requests the new digital identity via the user agent to the identity provider. The ***UA*** activates the authentication process by requesting the new identity to the ***RP***, which responds by providing the IdP token (access token from IdP's AS).  
 (4) - (7)	The ***UA*** requests the IdC token (access token from the custodian's AS) to its ***AS***, sending also the IdP token received from ***RP***. The custodian's ***AS*** requests credentials from the ***data subject*** and returns the IdC token to the ***UA***.  
@@ -404,7 +435,7 @@ For the effectiveness of the identity trust system based on the paradigm of trus
 2. The digital identity must be linkable to the physical identity in a verifiable manner.
 3. Only the authority that legally manages the individual's physical identity can verify this link.
 4. The authentication system must be flexible (i.e., able to adapt to technological evolutions or emerging needs).
-5. The authentication system must be accessible to all (i.e., without discriminatory costs).
+5. The authentication system must be accessible to all potential users (i.e., without discriminatory costs).
 6. The authentication system must be secure (i.e., continuously aligned with security best practices).
 7. The authentication system must be privacy-friendly (i.e., not requiring any personal information unless strictly necessary).
 8. The authentication system must be resilient (i.e., with availability appropriate for needs and the ability to cope with adversity).
@@ -413,17 +444,23 @@ For the effectiveness of the identity trust system based on the paradigm of trus
 To guarantee the principles set out, the requirements of the authentication system MUST include the protection of personal data and the guarantee of anonymity for lawful purposes, that is:
 
 1. Ensure mutual recognition to guarantee the identity of the provider to the consumer.
-2. Ensure the ability to authenticate the digital identities of consumers and providers against their real-world identity without exposing real data
+2. Ensure the ability to authenticate the digital identities of consumers and providers against their real-world identity, without unnecessarily exposing real data.
 
-Naturally, the ability to validate the authenticity of the relationship between digital identity and physical identity lies only with the public authority responsible for managing the citizen's identity.
+The ability to validate the authenticity of the relationship between digital identity and physical identity lies only with the public authority responsible for managing the citizen's identity. This capability is provided through a digital identity recognition service (i.e. IdC), technologically compliant with identity provider protocols but under the supervision of the public authority.
 
 # Security Considerations
 
-Integrity and resilience are the most critical parameters. Symmetric authentication should avoid the risk of man-in-the-middle attack because it should successfully attack both message flows at the same time. The trustee is a critical component and must be subjected to rigorous checks on compliance with the standards. Referring to the term identification, we mean at least three different types, the device, the digital user and the individual.
+There are some cautionary points regarding security that need to be considered.
+- Integrity and resilience are the most critical parameters. The integrity of the messages is fundamental to guarantee the authenticity of the identity, while the availability of the authentication service is the basis for ensuring the feasibility of the entire process.
+- Symmetric authentication contrast the risk of man-in-the-middle attack because it should successfully attack both message flows at the same time.
+- The trustee is a critical component and must be subjected to rigorous checks on compliance with the standards.
+- The relying party and the resourse server should be on different servers using a dedicated communication channel.
+
+Referring to the term identification, we mean at least three different types, the device, the digital user and the individual.
 
 - The ***device*** is identified with technical methods suited to the various needs. For example, geolocalization using International Mobile Equipment Identity (IMEI) [ITU1] and Integrated Circuit Card ID (ICCID) [ITU2].
 - The ***digital user*** is well managed by [RFC6749] but inside the digital ecosystem. To manage users of multiple domains, either the user registrations are duplicated for each domain involved, or the domains involved are joined in a trust relationship.
-- The ***individual*** is well managed with classic physical methods (e.g. photo ID) but the link with the digital identity needs to be improved because the quality is not satisfactory. This topic is beyond the scope of this specification and it was explored for example in [LS3].
+- The ***individual***, or natural person, is well managed with classic physical methods (e.g. photo ID) but the link with the digital identity needs to be improved because the quality is not satisfactory. This topic is beyond the scope of this specification and it was explored for example in [LS3].
 
 An in-depth defense system SHOULD consider all the components involved and in this case not just the pure digital authentication of the user. In this document only the digital user is treated but extensions applicable to mixed situations with multiple types are certainly welcome to improve the overall security profile.
 
@@ -442,15 +479,15 @@ The service provider SHOULD know only the data necessary to build the authorizat
 
 # Conclusions
 
-The identity management system, to operate in different digital ecosystems, should rely on a common authentication protocol that symmetrically performs the same operations in complete transparency, entrusting the decision on recognition to a trusted third party. The trust in the reliability of the recognition carried out by the identity guarantor (IdP or IdC) cannot be based on the technological component alone. It is therefore necessary to involve a supervisory authority of the overall system for technological aspects and the authorities of the data subject's country for data protection.
+To operate effectively between the different digital ecosystems, the identity management system MUST be based on a common authentication protocol that symmetrically carries out the same operations in complete transparency, entrusting the decision on recognition to a trusted third party. Confidence in the reliability of recognition carried out by the identity guarantor (IdP or IdC) cannot be based on the technological component alone. It is therefore necessary to involve an independent supervisory authority for technological aspects and the local competent public authority responsible for data protection.
 
-To improve trust between two entities, in this identification scheme, the objective is to provide three guarantees:
+To improve trust in the digital operations between the consumer and the service provider three guarantees must be provided.
 
-1. The mutual recognition between consumer and supplier.
-2. The control and minimization of the personal information processed
-3. In case of legal need, the ability to match the digital identities of consumer and supplier against their real-world identity.
+1. The mutual recognition between consumer and service provider.
+2. The control and minimization of the personal information processed.
+3. In case of legal need, the ability to match the digital identities of consumer and provider against their real-world identity.
 
-Technically, due to the strong synergy obtained it is advisable to maintain alignment with [RFC6749] and the related specifications. 
+Due to the strong synergy that can be achieved, it is advisable to maintain constant technical alignment with the standard [RFC6749] and the related specifications to implement point-to-point authentication, within the broader symmetric authentication framework.
 
 # IANA Considerations
 
