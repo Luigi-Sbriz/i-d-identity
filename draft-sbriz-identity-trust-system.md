@@ -4,10 +4,7 @@ category: std
 
 docname: draft-sbriz-identity-trust-system-latest
 submissiontype: IETF
-number:
-date:
 consensus: true
-v: 3
 area: SEC
 workgroup: Web Authorization Protocol
 keyword:
