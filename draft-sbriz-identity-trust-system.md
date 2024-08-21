@@ -3,10 +3,12 @@ title: "Identity Trust System"
 category: std
 
 docname: draft-sbriz-identity-trust-system-latest
-submissiontype: IETF
-consensus: true
+stand_alone: true
+ipr: trust200902
 area: SEC
-workgroup: Web Authorization Protocol
+wg: Web Authorization Protocol
+submissiontype: IETF
+
 keyword:
  - identity
  - authentication
