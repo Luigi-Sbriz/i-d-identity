@@ -2,7 +2,7 @@
 title: "Identity Trust System"
 category: std
 
-docname: draft-sbriz-identity-trust-system-02
+docname: draft-sbriz-identity-trust-system-latest
 submissiontype: IETF
 number:
 date:
